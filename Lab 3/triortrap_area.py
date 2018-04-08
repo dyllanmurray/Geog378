@@ -2,7 +2,7 @@
 # Name:        module1
 # Purpose:
 #
-# Author:      Dyllan Murray
+# Author:      Dyllanv Murray
 #
 # Created:     26/02/2018
 # Copyright:   (c) Dyllan Murray 2018
