@@ -1,0 +1,15 @@
+# This program calculates the area of a triangle.
+
+# The description of the program will appear on the command prompt when the user
+print "This program finds the area of a triangle."
+print
+
+# Height and base are variables that will accept user input from the command line. The user will be prompted to enter the height and base of the triangle
+height = input("Please enter the height of the triangle: ")
+base = input("Please enter the base length of the triangle: ")
+
+# The variable area is set to calculate the area of a triangle based on the user inputs for height and base
+area = 0.5 * height * base
+
+# The user will see the following printed on the command prompt. The height, base and area variables will be displayed.
+print "The area of a triangle with height", height, "and base", base, "is", area, "."
