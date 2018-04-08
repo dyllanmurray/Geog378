@@ -1,5 +1,5 @@
 #-------------------------------------------------------------------------------
-# Name:        module2
+# Name:        mofdule2
 # Purpose:
 #
 # Author:      Dyllan Murray
