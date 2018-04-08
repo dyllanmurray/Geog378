@@ -1,0 +1,54 @@
+# This program converts lat/long coordinates from a given format of either decimal degrees (DD) or degrees, minutes,
+# seconds (DMS) and provides the opposite coordinate format def dms(): First we must define our user inputs we need
+# to convert the DMS values to DD
+
+def dms_2_dd():  # Define the function dms_to_dd
+
+    global user_input  # calls the global variable user_input to be used within the function
+    if user_input < 0:
+        user_input = (abs(user_input[0]))
+        user_input = (user_input[0] + (user_input[1] / 60) + (user_input[2] / 3600)) * -1
+    else:
+        user_input = user_input[0] + (user_input[1] / 60) + (user_input[2] / 3600)
+    print "Your location was converted to a decimal degree value of ", user_input
+
+
+def dd_2_dms():  # define the function to convert deciaml degrees to degrees, minutes seconds.
+
+    global user_input
+    if user_input[0] < 0:
+        user_input = abs(user_input[0])
+        d = int(user_input)
+        m = int((user_input - d) * 60)
+        s = int((user_input - d - m / 60.0) * 3600)  # must make 60 a float to divide 60.025
+        d *= -1
+    else:
+        d = int(user_input[0])
+        m = int((user_input[0] - d) * 60)
+        s = int((user_input[0] - d - m / 60.0) * 3600)  # must make 60 a float to divide 60.0
+
+    dmsTuple = tuple([d, m, s])
+    print dmsTuple
+
+
+while True:
+    user_input = raw_input("Enter a latitude or longitude value in DMS or DD format: ")
+    user_input = user_input.split(",")
+
+    if len(user_input) == 1:
+        user_input = map(float, user_input)
+        print "you are running the DD to DMS converter"
+        print "you have entered a DD value of ", user_input
+        dd_2_dms()
+        exit()
+
+    elif len(user_input) == 3:
+        print "you are running the DMS to DD converter"
+        print "you have entered a DMS value of", user_input
+        user_input = map(float, user_input)
+        dms_2_dd()
+        exit()
+
+    else:
+        print "please enter the value with proper dms or dd format"
+print "please try again! "  # need to create a while loop for the exception run
