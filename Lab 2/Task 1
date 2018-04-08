@@ -1,0 +1,114 @@
+GDAL
+Task 1
+
+A..
+echo off
+rem  Using a GDAL installation. 
+rem  set up the GDAL environment using GDALShell.bat
+
+if exist "C:\Program Files (x86)\GDAL\" (
+rem if the directory exists, find and execute the bat file
+   call "C:\Program Files (x86)\GDAL\GDALShell.bat"
+)
+
+gdalinfo %1
+rem given the elevation file (%1) display metadata.  UNIT["metre",1,
+Upper Left  (  798243.562, 1701947.684) (107d46'41.35"E, 15d22'37.35"N)
+Lower Left  (  798243.562, 1694777.684) (107d46'38.27"E, 15d18'44.26"N)
+Upper Right (  807203.562, 1701947.684) (107d51'41.55"E, 15d22'33.55"N)
+Lower Right (  807203.562, 1694777.684) (107d51'38.38"E, 15d18'40.48"N)
+
+807203.562-798243.562 x  1701947.684-1694777.684
+8690m x 7170m
+
+B. 
+Size is 1792, 1434
+Pixel Size = (5.000000000000000,-5.000000000000000)
+
+8690 m / 1792 pix = 5m/pix
+7170 / 1434 = 5m/pix
+
+1cm = 100 pixels = 500m =
+1/500,000 cm
+
+
+Task 2
+OUTPUT
+echo off
+
+rem  Using a GDAL installation. 
+rem  set up the GDAL environment using GDALShell.bat
+
+if exist "C:\Program Files (x86)\GDAL\" (
+rem if the directory exists, find and execute the bat file
+   call "C:\Program Files (x86)\GDAL\GDALShell.bat"
+)
+	> output.txt (
+		gdalinfo %1)
+rem given the elevation file (%1), output the metadata to a output.txt file
+
+REPROJECT
+echo off
+
+rem  Using a GDAL installation. 
+rem  set up the GDAL environment using GDALShell.bat
+
+if exist "C:\Program Files (x86)\GDAL\" (
+rem if the directory exists, find and execute the bat file
+   call "C:\Program Files (x86)\GDAL\GDALShell.bat"
+)
+gdalwarp -t_srs "+proj=utm +zone=10 +ellps=GRS80 +datum=NAD83 +units=m +no_defs" independence.dem independence_NAD83.dem
+rem given the elevation file (%1), reproject the .dem into NAD83
+
+TASK 3
+HILLSHADE
+echo off
+ 
+rem  Using a GDAL installation. 
+rem  set up the GDAL environment using GDALShell.bat
+
+if exist "C:\Program Files (x86)\GDAL\" (
+rem if the directory exists, find and execute the bat file
+   call "C:\Program Files (x86)\GDAL\GDALShell.bat"
+)
+echo on
+
+for %%g in (2) do gdaldem hillshade -z %%g %1 %1.Vertical%%gX.tif
+rem given the elevation file (%1), draw hillshades for 2 levels of vertical exaggeration
+
+CONTOUR
+echo off
+
+rem  Using a GDAL installation. 
+rem  set up the GDAL environment using GDALShell.bat
+
+if exist "C:\Program Files (x86)\GDAL\" (
+rem if the directory exists, find and execute the bat file
+   call "C:\Program Files (x86)\GDAL\GDALShell.bat"
+)
+
+gdal_contour -a elev independence_NAD83.dem contour.shp -i 10.0
+rem given the elevation file (%1), create 10meter contours from the DEM data in independence.dem and produce a shapefile 
+rem contour.shp/shx/dbf with the contour elevations in the "elev" attribute.
+
+OGR 
+Task1
+ogrinfo  bldg_clip_dist.shp -al -so
+The units are feet because the shapefile is in UTM State Plane Feet.
+825239.799771 - 790923.270307 = 34316.53
+905872.155487 - 869950.682382 = 35921.47
+34316.53ft x 35921.47ft
+
+No,the place on Earth covered by the features in the shapefile cannont be determined from these dimensions 
+because the file is a vector file the bounding rectangle only tells use the extent of the shapefile. There could
+be 10 lines inside the bounding box or 1,000,000 lines. 
+
+Task2
+There are 41 different land-use categories in the shapefile. 
+OGRINFO -sql "select count(distinct LU) FROM lulc_clip_dist"  lulc_clip_dist.shp
+
+TASK3
+ogr2ogr -f "kml" %1.kml %1.shp
+rem convert the command line parameter shapefile into a kml file while keeping the name of the 
+rem original input 
+
