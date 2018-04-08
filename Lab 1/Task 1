@@ -1,0 +1,77 @@
+TASK 1
+xcopy C:\work\data\*.txt C:\work\destination\*.txt
+REM copy files with .txt extension from the c:\work\data\ folder to a folder c:\work\destination\
+
+
+xcopy C:\work\data/D:01-01-2009 C:\work\destination\
+REM copies files modified after Jan 1, 2009 from the c:\work\data\ folder to a folder c:\work\destination\
+
+
+
+Task 2
+A.if exist C:\work\data\Readme.txt echo "Readme.txt is in C:\work\data"
+REM determines if the file "Readme.txt" is in the c:\work\data\ folder and outputs the message
+
+B.if exist C:\work\data\Readme.txt ren C:\work\data\Readme.txt Readme_new.txt 
+REM determines if the file "Readme.txt" is in the c:\work\data\ folder and renames it to "Readme_new.txt"
+
+
+Task 3
+A. 
+c:\work\data>c:\work\task3a.bat "basename"
+
+@echo off
+@echo %1
+REM sets a parameter for input from command line
+
+if exist %1.shp echo "%1.shp is in current directory"
+REM determines if the parameter entered in the command line is in the current directory and displays a message if it is found
+
+B.
+c:\work\data>c:\work\task3b.bat "basename"
+
+@echo off
+@echo %1
+REM sets a parameter for input from command line
+
+set /a count=0
+REM sets the count variable equal to 0
+
+for /r %%g in (%1.*shp, %1.*shx, %1.*dbf, %1.*prj) do (
+	set /a count+=1
+	)
+REM loop through all files in the direcotry and determine if the parameter enterd has the proper extensions.
+REM if the parameter and extension exist in the directory, add 1 to the count variable
+
+echo %count% files were found in current directory
+REM out the number of files found in the directory 
+
+
+C. 
+c:\work\data>c:\work\task3c.bat "basename"
+@echo off
+@echo %1
+REM sets a parameter for input from command line
+
+set /a count=0
+REM sets the count variable equal to 0
+
+for /r %%g in (%1.*shp, %1.*shx, %1.*dbf, %1.*prj) do (
+	set /a count+=1
+	)
+REM loop through all files in the direcotry and determine if the parameter enterd has the proper extensions.
+REM if the parameter and extension exist in the directory, add 1 to the count variable
+
+	if %count% ==4 echo %1 is a complete shapefile including optional projection information REM if the count variable is equal to 4, the output will indicate that parameter entered was a complete shapefile with projection information
+	) else (
+		if %count%==3 echo %1 is a complete shapefile not including projection information REM if the count variable is equal to 3, the output will indicate that parameter entered was a complete shapefile without projection information
+	) else (
+		if %count%==2 echo %1 is not a complete shapefile. REM if the count variable is equal to 2, the output will indicate that parameter entered is not a complete shapefile
+	) else (
+		echo %1 is not a shape file REM if the count variable is any other value, the output will indicate that parameter entered is not a shapefile 
+
+Task 4
+A. Redirections file info into a .txt file called result.txt
+B. Redirect all files in \soils\daneSoils\ to a .txt file called daneData.txt
+C. Find “Robinson”(not case sensitive) in daneData.txt and redirect it to result.txt. 
+D. Display the contents of result.txt and find “he”
